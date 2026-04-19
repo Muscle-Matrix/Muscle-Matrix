@@ -1,0 +1,30 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.musclematrix.app"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.musclematrix.app"
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+tasks.register("syncWebAssets", Copy) {
+    from("../..") {
+        include "index.html"
+        include "styles.css"
+        include "app.js"
+        include "manifest.webmanifest"
+        include "sw.js"
+        include "assets/**"
+    }
+    into("$projectDir/src/main/assets/www")
+}
+
+preBuild.dependsOn("syncWebAssets")

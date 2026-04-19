@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1464b3" />
+    <title>Muscle Matrix</title>
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <section class="login-screen" data-screen="login">
+        <div class="login-media" aria-hidden="true"></div>
+        <div class="login-panel">
+          <p class="eyebrow">Gym Management System</p>
+          <h1>Muscle Matrix</h1>
+          <p class="lead">Train members, manage operations, and build smarter fitness plans from one place.</p>
+
+          <form id="loginForm" class="login-form">
+            <label>
+              Username
+              <input id="usernameInput" type="text" value="Siddharth123" required />
+            </label>
+            <label>
+              Password
+              <input id="passwordInput" type="password" value="12345678" required minlength="6" />
+            </label>
+            <button type="submit" class="primary-btn">Enter Dashboard</button>
+          </form>
+
+          <button id="googleLogin" class="google-btn" type="button">
+            <span>G</span>
+            Continue with Google
+          </button>
+
+          <p class="small-note">Demo access uses local storage. Add a Google OAuth client ID before production launch.</p>
+        </div>
+      </section>
+
+      <section class="app-shell hidden" data-screen="dashboard">
+        <aside class="sidebar">
+          <div class="brand-block">
+            <span class="brand-mark">MM</span>
+            <div>
+              <strong>Muscle Matrix</strong>
+              <small>Train Track Transform</small>
+            </div>
+          </div>
+
+          <nav class="nav-list" aria-label="Main navigation">
+            <button class="nav-item active" data-target="overview">Overview</button>
+            <button class="nav-item" data-target="members">Members</button>
+            <button class="nav-item" data-target="attendance">Attendance</button>
+            <button class="nav-item" data-target="planner">Workout AI</button>
+            <button class="nav-item" data-target="nutrition">Diet Planner</button>
+            <button class="nav-item" data-target="martial">Martial Arts</button>
+            <button class="nav-item" data-target="reports">Reports</button>
+            <button class="nav-item" data-target="account">Account</button>
+          </nav>
+
+          <button id="logoutBtn" class="ghost-btn" type="button">Log Out</button>
+        </aside>
+
+        <div class="content">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Today</p>
+              <h2 id="pageTitle">Overview</h2>
+            </div>
+            <div class="profile-chip">
+              <span id="profileInitials">SI</span>
+              <div>
+                <strong id="profileName">Siddharth123</strong>
+                <small id="profileRole">Siddharth123</small>
+              </div>
+            </div>
+          </header>
+
+          <section id="overview" class="page active">
+            <div class="hero">
+              <div class="hero-copy">
+                <p class="eyebrow">Unified fitness operations</p>
+                <h2>Manage the gym and guide every member with one intelligent dashboard.</h2>
+                <p>Track records, fees, attendance, body metrics, training goals, and personalized plans without scattered registers.</p>
+                <div class="hero-actions">
+                  <button class="primary-btn" data-target="members">Add Member</button>
+                  <button class="secondary-btn" data-target="planner">Generate Plan</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span>Total Members</span>
+                <strong id="totalMembers">0</strong>
+              </article>
+              <article class="stat-card">
+                <span>Active Trainers</span>
+                <strong id="totalTrainers">0</strong>
+              </article>
+              <article class="stat-card">
+                <span>Attendance Today</span>
+                <strong id="todayAttendance">0</strong>
+              </article>
+              <article class="stat-card">
+                <span>Pending Fees</span>
+                <strong id="pendingFees">0</strong>
+              </article>
+            </div>
+
+            <div class="split-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Recent Members</h3>
+                  <button class="text-btn" data-target="members">Manage</button>
+                </div>
+                <div id="recentMembers" class="compact-list"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Smart Suggestions</h3>
+                  <button class="text-btn" data-target="planner">Open</button>
+                </div>
+                <div id="smartTips" class="tip-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="members" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Records</p>
+                <h2>Members, Trainers, and Fees</h2>
+              </div>
+            </div>
+
+            <div class="split-grid">
+              <form id="memberForm" class="panel form-grid">
+                <h3>Add Member</h3>
+                <label>Name <input id="memberName" required placeholder="Rahul Sharma" /></label>
+                <label>Age <input id="memberAge" type="number" min="12" max="90" required value="22" /></label>
+                <label>Weight (kg) <input id="memberWeight" type="number" min="25" max="250" required value="72" /></label>
+                <label>Height (cm) <input id="memberHeight" type="number" min="100" max="230" required value="175" /></label>
+                <label>Goal
+                  <select id="memberGoal">
+                    <option>Fat Loss</option>
+                    <option>Muscle Gain</option>
+                    <option>Strength</option>
+                    <option>Endurance</option>
+                    <option>Maintenance</option>
+                  </select>
+                </label>
+                <label>Membership
+                  <select id="memberPlan">
+                    <option>Monthly</option>
+                    <option>Quarterly</option>
+                    <option>Half-Yearly</option>
+                    <option>Yearly</option>
+                  </select>
+                </label>
+                <label>Fee Status
+                  <select id="memberFee">
+                    <option>Paid</option>
+                    <option>Pending</option>
+                  </select>
+                </label>
+                <button class="primary-btn" type="submit">Save Member</button>
+              </form>
+
+              <form id="trainerForm" class="panel form-grid">
+                <h3>Add Trainer</h3>
+                <label>Name <input id="trainerName" required placeholder="Ananya Coach" /></label>
+                <label>Speciality
+                  <select id="trainerSpeciality">
+                    <option>Strength Training</option>
+                    <option>Weight Loss</option>
+                    <option>Bodybuilding</option>
+                    <option>Yoga & Mobility</option>
+                    <option>Martial Arts</option>
+                  </select>
+                </label>
+                <label>Shift
+                  <select id="trainerShift">
+                    <option>Morning</option>
+                    <option>Evening</option>
+                    <option>Full Day</option>
+                  </select>
+                </label>
+                <button class="secondary-btn" type="submit">Save Trainer</button>
+              </form>
+            </div>
+
+            <div class="panel table-panel">
+              <div class="panel-head">
+                <h3>Member Register</h3>
+                <input id="memberSearch" class="search-input" placeholder="Search members" />
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Goal</th>
+                      <th>BMI</th>
+                      <th>Plan</th>
+                      <th>Fees</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="memberTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Trainer Team</h3>
+              </div>
+              <div id="trainerList" class="card-list"></div>
+            </div>
+          </section>
+
+          <section id="attendance" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Daily log</p>
+                <h2>Attendance and Workout Schedule</h2>
+              </div>
+            </div>
+
+            <div class="split-grid">
+              <form id="attendanceForm" class="panel form-grid">
+                <h3>Mark Attendance</h3>
+                <label>Member
+                  <select id="attendanceMember"></select>
+                </label>
+                <label>Date <input id="attendanceDate" type="date" required /></label>
+                <label>Session
+                  <select id="attendanceSession">
+                    <option>Strength</option>
+                    <option>Cardio</option>
+                    <option>HIIT</option>
+                    <option>Mobility</option>
+                    <option>Martial Arts</option>
+                  </select>
+                </label>
+                <button class="primary-btn" type="submit">Mark Present</button>
+              </form>
+
+              <form id="scheduleForm" class="panel form-grid">
+                <h3>Create Schedule</h3>
+                <label>Member
+                  <select id="scheduleMember"></select>
+                </label>
+                <label>Day
+                  <select id="scheduleDay">
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                  </select>
+                </label>
+                <label>Focus <input id="scheduleFocus" placeholder="Upper body strength" required /></label>
+                <button class="secondary-btn" type="submit">Add Schedule</button>
+              </form>
+            </div>
+
+            <div class="split-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Attendance Log</h3>
+                </div>
+                <div id="attendanceLog" class="compact-list"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Workout Schedule</h3>
+                </div>
+                <div id="scheduleList" class="compact-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="planner" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Personalization</p>
+                <h2>Workout Plan, BMI, and Calories</h2>
+              </div>
+            </div>
+
+            <div class="split-grid">
+              <form id="calculatorForm" class="panel form-grid">
+                <h3>Body Metrics</h3>
+                <label>Gender
+                  <select id="calcGender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </label>
+                <label>Age <input id="calcAge" type="number" min="12" max="90" value="22" required /></label>
+                <label>Weight (kg) <input id="calcWeight" type="number" min="25" max="250" value="72" required /></label>
+                <label>Height (cm) <input id="calcHeight" type="number" min="100" max="230" value="175" required /></label>
+                <label>Activity
+                  <select id="calcActivity">
+                    <option value="1.2">Sedentary</option>
+                    <option value="1.375">Light</option>
+                    <option value="1.55" selected>Moderate</option>
+                    <option value="1.725">Very Active</option>
+                  </select>
+                </label>
+                <label>Goal
+                  <select id="calcGoal">
+                    <option>Fat Loss</option>
+                    <option selected>Muscle Gain</option>
+                    <option>Strength</option>
+                    <option>Maintenance</option>
+                  </select>
+                </label>
+                <button class="primary-btn" type="submit">Calculate</button>
+              </form>
+
+              <article class="panel result-panel">
+                <h3>Result</h3>
+                <div id="calculatorResult" class="result-grid"></div>
+              </article>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Generated Workout Plan</h3>
+                <button id="copyWorkout" class="text-btn" type="button">Copy Plan</button>
+              </div>
+              <div id="workoutPlan" class="plan-grid"></div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Exercise Library</h3>
+                <select id="exerciseFilter" class="search-input">
+                  <option>All</option>
+                  <option>Chest</option>
+                  <option>Back</option>
+                  <option>Legs</option>
+                  <option>Core</option>
+                  <option>Cardio</option>
+                </select>
+              </div>
+              <div id="exerciseLibrary" class="exercise-grid"></div>
+            </div>
+          </section>
+
+          <section id="nutrition" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Fuel</p>
+                <h2>Diet Planner</h2>
+              </div>
+            </div>
+
+            <div class="split-grid">
+              <form id="dietForm" class="panel form-grid">
+                <h3>Build Diet</h3>
+                <label>Diet Type
+                  <select id="dietType">
+                    <option>Balanced</option>
+                    <option>Vegetarian</option>
+                    <option>High Protein</option>
+                    <option>Budget Indian</option>
+                  </select>
+                </label>
+                <label>Calories <input id="dietCalories" type="number" min="1200" max="5000" value="2400" required /></label>
+                <label>Meals
+                  <select id="dietMeals">
+                    <option>3</option>
+                    <option selected>4</option>
+                    <option>5</option>
+                  </select>
+                </label>
+                <button class="primary-btn" type="submit">Create Diet</button>
+              </form>
+
+              <article class="panel">
+                <h3>Nutrition Targets</h3>
+                <div id="macroTargets" class="result-grid"></div>
+              </article>
+            </div>
+
+            <div id="dietPlan" class="meal-grid"></div>
+          </section>
+
+          <section id="martial" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Subscription Academy</p>
+                <h2>Lookism-Inspired Combat Paths</h2>
+              </div>
+              <span id="subscriptionStatus" class="badge warn">Subscription required</span>
+            </div>
+
+            <div class="martial-hero">
+              <div>
+                <h3>Train like a webtoon fighter, progress like an athlete.</h3>
+                <p>Choose a disciplined path with safe drills, conditioning, tutorials, and coach-led progression.</p>
+              </div>
+            </div>
+
+            <div id="subscriptionPlans" class="pricing-grid"></div>
+            <div id="paymentAccess" class="panel access-panel"></div>
+            <div id="combatPaths" class="combat-grid"></div>
+          </section>
+
+          <section id="reports" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Review</p>
+                <h2>Progress and Reports</h2>
+              </div>
+              <button id="exportReport" class="secondary-btn" type="button">Export JSON</button>
+            </div>
+
+            <div class="split-grid">
+              <article class="panel">
+                <h3>Gym Health</h3>
+                <div id="reportSummary" class="report-list"></div>
+              </article>
+              <form id="progressForm" class="panel form-grid">
+                <h3>Add Progress</h3>
+                <label>Member
+                  <select id="progressMember"></select>
+                </label>
+                <label>Weight (kg) <input id="progressWeight" type="number" min="25" max="250" value="70" required /></label>
+                <label>Note <input id="progressNote" placeholder="Improved squat form" required /></label>
+                <button class="primary-btn" type="submit">Save Progress</button>
+              </form>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Progress Timeline</h3>
+              </div>
+              <div id="progressList" class="compact-list"></div>
+            </div>
+          </section>
+
+          <section id="account" class="page">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Access</p>
+                <h2>Change Username and Password</h2>
+              </div>
+            </div>
+
+            <div class="split-grid">
+              <form id="credentialForm" class="panel form-grid">
+                <h3>Login Details</h3>
+                <label>New Username <input id="newUsername" type="text" required /></label>
+                <label>Current Password <input id="currentPassword" type="password" required /></label>
+                <label>New Password <input id="newPassword" type="password" minlength="6" required /></label>
+                <button class="primary-btn" type="submit">Update Login</button>
+              </form>
+
+              <article class="panel">
+                <h3>Person Name</h3>
+                <div class="result-grid">
+                  <div class="metric">
+                    <span>Username</span>
+                    <strong id="currentUsername">Siddharth123</strong>
+                  </div>
+                  <div class="metric">
+                    <span>Password</span>
+                    <strong>Protected</strong>
+                  </div>
+                </div>
+                <p class="small-note">Use your current password before saving a new username or password.</p>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="checkoutModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <form id="paymentForm" class="modal-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Payment Gateway</p>
+            <h2 id="checkoutTitle">Complete Subscription</h2>
+          </div>
+          <button class="text-btn" type="button" data-close-checkout>Close</button>
+        </div>
+
+        <div class="checkout-summary">
+          <div>
+            <span>Selected Plan</span>
+            <strong id="checkoutPlan">Fighter</strong>
+          </div>
+          <div>
+            <span>Amount</span>
+            <strong id="checkoutAmount">Rs. 699/mo</strong>
+          </div>
+        </div>
+
+        <label>Payment Method
+          <select id="paymentMethod">
+            <option>UPI</option>
+            <option>Card</option>
+            <option>Net Banking</option>
+          </select>
+        </label>
+        <label>UPI ID or Card Number
+          <input id="paymentReference" placeholder="siddharth@upi or 4242 4242 4242 4242" required />
+        </label>
+        <label>Name on Payment
+          <input id="paymentName" value="Siddharth123" required />
+        </label>
+
+        <button class="primary-btn" type="submit">Pay and Unlock Martial Arts</button>
+        <p class="small-note">Demo gateway only. It unlocks this project app without charging real money.</p>
+      </form>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
